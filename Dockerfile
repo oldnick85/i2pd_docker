@@ -46,7 +46,21 @@ RUN DEBIAN_FRONTEND=noninteractive\
 RUN DEBIAN_FRONTEND=noninteractive\ 
     apt-get install -y \ 
     libminiupnpc17
-EXPOSE 7070 4444 4447 7656 2827 7654 7650
+# Ports Used by I2P
+# Webconsole
+EXPOSE 7070
+# HTTP Proxy
+EXPOSE 4444
+# SOCKS Proxy
+EXPOSE 4447
+# SAM Bridge (TCP)
+EXPOSE 7656
+# BOB Bridge
+EXPOSE 2827
+# I2CP
+EXPOSE 7654
+# 7650
+EXPOSE 7650
 WORKDIR /I2PD/
 COPY --from=builder /BUILD_I2PD/i2pd/build/i2pd .
 COPY --from=builder /BUILD_I2PD/i2pd/contrib/certificates ./certificates
