@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 ARG UBUNTU_VERSION=22.04
-FROM ubuntu:${UBUNTU_VERSION} AS builder
+FROM ubuntu:${UBUNTU_VERSION} AS builder_i2pd
 ARG I2PD_VERSION=2.43.0
 ARG I2PD_COMPILER=gcc
 RUN DEBIAN_FRONTEND=noninteractive\
@@ -62,8 +62,8 @@ EXPOSE 7654
 # 7650
 EXPOSE 7650
 WORKDIR /I2PD/
-COPY --from=builder /BUILD_I2PD/i2pd/build/i2pd .
-COPY --from=builder /BUILD_I2PD/i2pd/contrib/certificates ./certificates
+COPY --from=builder_i2pd /BUILD_I2PD/i2pd/build/i2pd .
+COPY --from=builder_i2pd /BUILD_I2PD/i2pd/contrib/certificates ./certificates
 COPY i2pd.conf .
 RUN ulimit -n 4096
 CMD ["/I2PD/i2pd", "--datadir", "/I2PD", "--conf", "/I2PD/i2pd.conf"]
